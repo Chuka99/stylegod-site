@@ -44,9 +44,19 @@
         <a class="iconbtn" href="https://www.instagram.com/sophia_de_stylegod/" target="_blank" rel="noreferrer">IG</a>
         <a class="iconbtn" href="https://www.tiktok.com/@sophia_stylegod" target="_blank" rel="noreferrer">TT</a>
 
-        <button class="cartbtn" id="openCartBtn" type="button" aria-haspopup="dialog" aria-controls="cartDrawer">
+        <!-- <button class="cartbtn" id="openCartBtn" type="button" aria-haspopup="dialog" aria-controls="cartDrawer">
           Cart <span class="pillCount" id="cartCount">0</span>
-        </button>
+        </button> -->
+
+        <button id="openCartBtn" type="button">Cart</button>
+
+<div id="backdrop" hidden></div>
+
+<aside id="cartDrawer" hidden>
+  <button id="closeCartBtn" type="button">✕</button>
+</aside>
+
+        
       </div>
     </div>
   </header>
@@ -276,4 +286,5 @@
 
   <script src="app.js"></script>
 </body>
+
 </html>
