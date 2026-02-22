@@ -128,18 +128,7 @@ document.querySelectorAll(".catCard").forEach(btn => {
 
 // Drawer open/close
 // Drawer open/close (robust + toggle)
-openCartBtn.addEventListener("click", () => {
-  if (!drawer.hidden) closeDrawer();
-  else openDrawer();
-});
-
-closeCartBtn.addEventListener("click", closeDrawer);
-backdrop.addEventListener("click", closeDrawer);
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !drawer.hidden) closeDrawer();
-});
-
+// --- Drawer open/close (TOGGLE + robust) ---
 function openDrawer(){
   drawer.hidden = false;
   backdrop.hidden = false;
@@ -151,6 +140,25 @@ function closeDrawer(){
   backdrop.hidden = true;
   document.body.style.overflow = "";
 }
+
+function toggleDrawer(){
+  if (drawer.hidden) openDrawer();
+  else closeDrawer();
+}
+
+// IMPORTANT: Cart button toggles
+openCartBtn.addEventListener("click", toggleDrawer);
+
+// Close button closes
+closeCartBtn.addEventListener("click", closeDrawer);
+
+// Backdrop click closes
+backdrop.addEventListener("click", closeDrawer);
+
+// ESC closes
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") closeDrawer();
+});
 
 // Quick chat
 quickChatBtn.addEventListener("click", () => openWhatsApp(CONFIG.quickChatText));
@@ -409,4 +417,5 @@ function toast(text){
   toastEl.hidden = false;
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => { toastEl.hidden = true; }, 1600);
+
 }
