@@ -73,351 +73,84 @@ const PRODUCTS = [
 let cart = loadCart();        // { [id]: qty }
 let filter = "all";
 
-// --- DOM + Safe Init (prevents crashes if an element is missing) ---
-document.addEventListener("DOMContentLoaded", () => {
-  // DOM
-  const yearEl = document.getElementById("year");
-  const productGrid = document.getElementById("productGrid");
-  const miniGrid = document.getElementById("miniGrid");
+// --- DOM ---
+const yearEl = document.getElementById("year");
+const productGrid = document.getElementById("productGrid");
+const miniGrid = document.getElementById("miniGrid");
 
-  const cartCountEl = document.getElementById("cartCount");
-  const cartListEl  = document.getElementById("cartList");
-  const cartTotalEl = document.getElementById("cartTotal");
+const cartCountEl = document.getElementById("cartCount");
+const cartListEl  = document.getElementById("cartList");
+const cartTotalEl = document.getElementById("cartTotal");
 
-  const openCartBtn  = document.getElementById("openCartBtn");
-  const closeCartBtn = document.getElementById("closeCartBtn");
-  const drawer   = document.getElementById("cartDrawer");
-  const backdrop = document.getElementById("backdrop");
+const openCartBtn  = document.getElementById("openCartBtn");
+const closeCartBtn = document.getElementById("closeCartBtn");
+const drawer   = document.getElementById("cartDrawer");
+const backdrop = document.getElementById("backdrop");
 
-  const checkoutBtn = document.getElementById("checkoutBtn");
-  const clearBtn    = document.getElementById("clearBtn");
-  const quickChatBtn = document.getElementById("quickChatBtn");
-  const contactForm = document.getElementById("contactForm");
+const checkoutBtn = document.getElementById("checkoutBtn");
+const clearBtn    = document.getElementById("clearBtn");
+const quickChatBtn = document.getElementById("quickChatBtn");
 
-  const cartDelivery = document.getElementById("cartDelivery");
-  const cartLocation = document.getElementById("cartLocation");
-  const cartName     = document.getElementById("cartName");
-  const cartPhone    = document.getElementById("cartPhone");
+const contactForm = document.getElementById("contactForm");
 
-  const toastEl = document.getElementById("toast");
+const cartDelivery = document.getElementById("cartDelivery");
+const cartLocation = document.getElementById("cartLocation");
+const cartName     = document.getElementById("cartName");
+const cartPhone    = document.getElementById("cartPhone");
 
-  // If this page doesn't have the shop/cart UI, do not run the shop app
-  const required = {
-    productGrid, miniGrid, cartCountEl, cartListEl, cartTotalEl,
-    openCartBtn, closeCartBtn, drawer, backdrop
-  };
+const toastEl = document.getElementById("toast");
 
-  const missing = Object.entries(required).filter(([,v]) => !v).map(([k]) => k);
-  if (missing.length) {
-    console.warn("Shop app not initialized. Missing elements:", missing);
-    return;
-  }
+// --- Init ---
+yearEl.textContent = new Date().getFullYear();
+renderMini();
+renderProducts();
+renderCart();
 
-  // --- State ---
-  let cart = loadCart(); // uses your existing loadCart()
-  let filter = "all";
-
-  // Year
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-  // Drawer helpers (toggle works)
-  function openDrawer(){
-    drawer.hidden = false;
-    backdrop.hidden = false;
-    document.body.style.overflow = "hidden";
-  }
-  function closeDrawer(){
-    drawer.hidden = true;
-    backdrop.hidden = true;
-    document.body.style.overflow = "";
-  }
-  function toggleDrawer(){
-    if (drawer.hidden) openDrawer();
-    else closeDrawer();
-  }
-
-  openCartBtn.addEventListener("click", toggleDrawer);
-  closeCartBtn.addEventListener("click", closeDrawer);
-  backdrop.addEventListener("click", closeDrawer);
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeDrawer();
-  });
-
-  // Toast (safe)
-  let toastTimer;
-  function toast(text){
-    if (!toastEl) return;
-    toastEl.textContent = text;
-    toastEl.hidden = false;
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => { toastEl.hidden = true; }, 1600);
-  }
-
-  // --- Render functions (use your same logic, but with safe DOM refs) ---
-  function renderMini(){
-    const picks = PRODUCTS.slice(0, 3);
-    miniGrid.innerHTML = picks.map(p => `
-      <div class="miniItem">
-        <img src="${p.img}" alt="${escapeHtml(p.name)}" loading="lazy" />
-        <div>
-          <strong>${escapeHtml(p.name)}</strong>
-          <small>${formatMoney(p.price)} • ${labelCategory(p.category)}</small>
-        </div>
-      </div>
-    `).join("");
-  }
-
-  function renderProducts(){
-    const list = PRODUCTS.filter(p => filter === "all" ? true : p.category === filter);
-
-    productGrid.innerHTML = list.map(p => {
-      const qty = cart[p.id] || 0;
-      return `
-        <article class="card">
-          <div class="card__img">
-            <img src="${p.img}" alt="${escapeHtml(p.name)}" loading="lazy" />
-          </div>
-          <div class="card__body">
-            <h3 class="card__title">${escapeHtml(p.name)}</h3>
-            <div class="card__meta">
-              <span class="price">${formatMoney(p.price)}</span>
-              <span class="badge">${labelCategory(p.category)}</span>
-            </div>
-            <p class="card__desc">${escapeHtml(p.desc)}</p>
-
-            <div class="card__actions">
-              <button class="btn btn--primary" type="button" data-add="${p.id}">Add</button>
-
-              <div class="qty" aria-label="Quantity controls">
-                <button type="button" data-dec="${p.id}" aria-label="Decrease">−</button>
-                <span>${qty}</span>
-                <button type="button" data-inc="${p.id}" aria-label="Increase">+</button>
-              </div>
-            </div>
-          </div>
-        </article>
-      `;
-    }).join("");
-
-    productGrid.querySelectorAll("[data-add]").forEach(b => b.addEventListener("click", () => {
-      addToCart(b.dataset.add, 1);
-      toast("Added to cart ✔️");
-    }));
-    productGrid.querySelectorAll("[data-inc]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.inc, 1)));
-    productGrid.querySelectorAll("[data-dec]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.dec, -1)));
-  }
-
-  function renderCart(){
-    const items = getCartItems();
-    cartCountEl.textContent = String(items.reduce((s, it) => s + it.qty, 0));
-    cartTotalEl.textContent = formatMoney(items.reduce((s, it) => s + it.qty * it.price, 0));
-
-    if (!items.length) {
-      cartListEl.innerHTML = `<div class="cartItem"><strong>Your cart is empty</strong><br><small>Add items from the shop.</small></div>`;
-      return;
-    }
-
-    cartListEl.innerHTML = items.map(it => `
-      <div class="cartItem">
-        <div class="cartItem__row">
-          <div>
-            <strong>${escapeHtml(it.name)}</strong>
-            <small>${formatMoney(it.price)} each • ${labelCategory(it.category)}</small>
-          </div>
-          <div><strong>${formatMoney(it.price * it.qty)}</strong></div>
-        </div>
-        <div class="cartItem__actions">
-          <div class="qty">
-            <button type="button" data-dec="${it.id}">−</button>
-            <span>${it.qty}</span>
-            <button type="button" data-inc="${it.id}">+</button>
-          </div>
-          <button class="removeBtn" type="button" data-remove="${it.id}">Remove</button>
-        </div>
-      </div>
-    `).join("");
-
-    cartListEl.querySelectorAll("[data-inc]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.inc, 1)));
-    cartListEl.querySelectorAll("[data-dec]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.dec, -1)));
-    cartListEl.querySelectorAll("[data-remove]").forEach(b => b.addEventListener("click", () => {
-      delete cart[b.dataset.remove];
-      saveCart(cart);
-      renderProducts();
-      renderCart();
-    }));
-  }
-
-  function addToCart(id, delta){
-    const current = cart[id] || 0;
-    const next = Math.max(0, current + delta);
-    if (next === 0) delete cart[id];
-    else cart[id] = next;
-    saveCart(cart);
+// Filters
+document.querySelectorAll(".filter").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter").forEach(b => b.classList.remove("is-active"));
+    btn.classList.add("is-active");
+    filter = btn.dataset.filter;
     renderProducts();
-    renderCart();
-  }
-
-  function getCartItems(){
-    return Object.entries(cart).map(([id, qty]) => {
-      const p = PRODUCTS.find(x => x.id === id);
-      return p ? ({ ...p, qty }) : null;
-    }).filter(Boolean);
-  }
-
-  // Filters
-  document.querySelectorAll(".filter").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".filter").forEach(b => b.classList.remove("is-active"));
-      btn.classList.add("is-active");
-      filter = btn.dataset.filter;
-      renderProducts();
-    });
   });
-
-  // Category cards
-  document.querySelectorAll(".catCard").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const f = btn.dataset.filter;
-      const filterBtn = document.querySelector(`.filter[data-filter="${f}"]`);
-      if (filterBtn) filterBtn.click();
-      const shop = document.getElementById("shop");
-      if (shop) shop.scrollIntoView({ behavior:"smooth", block:"start" });
-    });
-  });
-
-  // Quick chat
-  if (quickChatBtn) quickChatBtn.addEventListener("click", () => openWhatsApp(CONFIG.quickChatText));
-
-  // Contact form
-  if (contactForm) contactForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const fd = new FormData(contactForm);
-    const text =
-`Hi ${CONFIG.storeName}! 👋
-
-${CONFIG.paymentNote}.
-
-Contact request:
-Name: ${clean(fd.get("name"))}
-Phone: ${clean(fd.get("phone"))}
-Delivery option: ${clean(fd.get("delivery"))}
-Location/Address: ${clean(fd.get("location"))}
-
-Message:
-${clean(fd.get("message"))}`;
-    openWhatsApp(text);
-  });
-
-  // Cart buttons
-  if (clearBtn) clearBtn.addEventListener("click", () => {
-    cart = {};
-    saveCart(cart);
-    renderProducts();
-    renderCart();
-    toast("Cart cleared ✔️");
-  });
-
-  if (checkoutBtn) checkoutBtn.addEventListener("click", () => {
-    const items = getCartItems();
-    if (!items.length) return toast("Cart is empty ❗");
-
-    const details = {
-      delivery: clean(cartDelivery?.value),
-      location: clean(cartLocation?.value),
-      name: clean(cartName?.value),
-      phone: clean(cartPhone?.value),
-    };
-
-    const msg = buildOrderMessage(items, details);
-    openWhatsApp(msg);
-  });
-
-  // Initial render
-  renderMini();
-  renderProducts();
-  renderCart();
 });
 
+// Category cards -> filter + scroll to shop
+document.querySelectorAll(".catCard").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const f = btn.dataset.filter;
+    const filterBtn = document.querySelector(`.filter[data-filter="${f}"]`);
+    if (filterBtn) filterBtn.click();
+    document.getElementById("shop").scrollIntoView({ behavior:"smooth", block:"start" });
+  });
+});
 
+// Drawer open/close
+// Drawer open/close (robust + toggle)
+openCartBtn.addEventListener("click", () => {
+  if (!drawer.hidden) closeDrawer();
+  else openDrawer();
+});
 
-// // --- DOM ---
-// const yearEl = document.getElementById("year");
-// const productGrid = document.getElementById("productGrid");
-// const miniGrid = document.getElementById("miniGrid");
+closeCartBtn.addEventListener("click", closeDrawer);
+backdrop.addEventListener("click", closeDrawer);
 
-// const cartCountEl = document.getElementById("cartCount");
-// const cartListEl  = document.getElementById("cartList");
-// const cartTotalEl = document.getElementById("cartTotal");
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !drawer.hidden) closeDrawer();
+});
 
-// const openCartBtn  = document.getElementById("openCartBtn");
-// const closeCartBtn = document.getElementById("closeCartBtn");
-// const drawer   = document.getElementById("cartDrawer");
-// const backdrop = document.getElementById("backdrop");
+function openDrawer(){
+  drawer.hidden = false;
+  backdrop.hidden = false;
+  document.body.style.overflow = "hidden";
+}
 
-// const checkoutBtn = document.getElementById("checkoutBtn");
-// const clearBtn    = document.getElementById("clearBtn");
-// const quickChatBtn = document.getElementById("quickChatBtn");
-
-// const contactForm = document.getElementById("contactForm");
-
-// const cartDelivery = document.getElementById("cartDelivery");
-// const cartLocation = document.getElementById("cartLocation");
-// const cartName     = document.getElementById("cartName");
-// const cartPhone    = document.getElementById("cartPhone");
-
-// const toastEl = document.getElementById("toast");
-
-// // --- Init ---
-// yearEl.textContent = new Date().getFullYear();
-// renderMini();
-// renderProducts();
-// renderCart();
-
-// // Filters
-// document.querySelectorAll(".filter").forEach(btn => {
-//   btn.addEventListener("click", () => {
-//     document.querySelectorAll(".filter").forEach(b => b.classList.remove("is-active"));
-//     btn.classList.add("is-active");
-//     filter = btn.dataset.filter;
-//     renderProducts();
-//   });
-// });
-
-// // Category cards -> filter + scroll to shop
-// document.querySelectorAll(".catCard").forEach(btn => {
-//   btn.addEventListener("click", () => {
-//     const f = btn.dataset.filter;
-//     const filterBtn = document.querySelector(`.filter[data-filter="${f}"]`);
-//     if (filterBtn) filterBtn.click();
-//     document.getElementById("shop").scrollIntoView({ behavior:"smooth", block:"start" });
-//   });
-// });
-
-// // Drawer open/close
-// // Drawer open/close (robust + toggle)
-// openCartBtn.addEventListener("click", () => {
-//   if (!drawer.hidden) closeDrawer();
-//   else openDrawer();
-// });
-
-// closeCartBtn.addEventListener("click", closeDrawer);
-// backdrop.addEventListener("click", closeDrawer);
-
-// document.addEventListener("keydown", (e) => {
-//   if (e.key === "Escape" && !drawer.hidden) closeDrawer();
-// });
-
-// function openDrawer(){
-//   drawer.hidden = false;
-//   backdrop.hidden = false;
-//   document.body.style.overflow = "hidden";
-// }
-
-// function closeDrawer(){
-//   drawer.hidden = true;
-//   backdrop.hidden = true;
-//   document.body.style.overflow = "";
-// }
+function closeDrawer(){
+  drawer.hidden = true;
+  backdrop.hidden = true;
+  document.body.style.overflow = "";
+}
 
 // Quick chat
 quickChatBtn.addEventListener("click", () => openWhatsApp(CONFIG.quickChatText));
