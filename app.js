@@ -1,4 +1,4 @@
-// Simple Stylegod-like shop with WhatsApp checkout (₦ only)
+// Stylegod shop — Cart dropdown + WhatsApp checkout (₦ only)
 
 const CONFIG = {
   currencySymbol: "₦",
@@ -70,38 +70,38 @@ const PRODUCTS = [
 ];
 
 // --- State ---
-let cart = loadCart();        // { [id]: qty }
+let cart = loadCart(); // { [id]: qty }
 let filter = "all";
 
 // --- DOM ---
-const yearEl = document.getElementById("year");
-const productGrid = document.getElementById("productGrid");
-const miniGrid = document.getElementById("miniGrid");
+const yearEl       = document.getElementById("year");
+const productGrid  = document.getElementById("productGrid");
+const miniGrid     = document.getElementById("miniGrid");
 
-const cartCountEl = document.getElementById("cartCount");
-const cartListEl  = document.getElementById("cartList");
-const cartTotalEl = document.getElementById("cartTotal");
+const cartCountEl  = document.getElementById("cartCount");
+const cartListEl   = document.getElementById("cartList");
+const cartTotalEl  = document.getElementById("cartTotal");
 
 const openCartBtn  = document.getElementById("openCartBtn");
 const closeCartBtn = document.getElementById("closeCartBtn");
-const drawer   = document.getElementById("cartDrawer");
-const backdrop = document.getElementById("backdrop");
+const cartDropdown = document.getElementById("cartDropdown");
 
-const checkoutBtn = document.getElementById("checkoutBtn");
-const clearBtn    = document.getElementById("clearBtn");
+const checkoutBtn  = document.getElementById("checkoutBtn");
+const clearBtn     = document.getElementById("clearBtn");
 const quickChatBtn = document.getElementById("quickChatBtn");
 
-const contactForm = document.getElementById("contactForm");
+const contactForm  = document.getElementById("contactForm");
 
 const cartDelivery = document.getElementById("cartDelivery");
 const cartLocation = document.getElementById("cartLocation");
 const cartName     = document.getElementById("cartName");
 const cartPhone    = document.getElementById("cartPhone");
 
-const toastEl = document.getElementById("toast");
+const toastEl      = document.getElementById("toast");
 
 // --- Init ---
 yearEl.textContent = new Date().getFullYear();
+
 renderMini();
 renderProducts();
 renderCart();
@@ -111,7 +111,7 @@ document.querySelectorAll(".filter").forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".filter").forEach(b => b.classList.remove("is-active"));
     btn.classList.add("is-active");
-    filter = btn.dataset.filter;
+    filter = btn.dataset.filter || "all";
     renderProducts();
   });
 });
@@ -122,34 +122,54 @@ document.querySelectorAll(".catCard").forEach(btn => {
     const f = btn.dataset.filter;
     const filterBtn = document.querySelector(`.filter[data-filter="${f}"]`);
     if (filterBtn) filterBtn.click();
-    document.getElementById("shop").scrollIntoView({ behavior:"smooth", block:"start" });
+    document.getElementById("shop").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 });
 
-// Drawer open/close
-// Drawer open/close (robust + toggle)
-openCartBtn.addEventListener("click", () => {
-  if (!drawer.hidden) closeDrawer();
-  else openDrawer();
+// --- Cart dropdown open/close (robust) ---
+openCartBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  toggleCartDropdown();
 });
 
-closeCartBtn.addEventListener("click", closeDrawer);
-backdrop.addEventListener("click", closeDrawer);
+closeCartBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  closeCartDropdown();
+});
 
+// Close when clicking outside
+document.addEventListener("click", (e) => {
+  if (cartDropdown.hidden) return;
+
+  const clickedInsideDropdown = cartDropdown.contains(e.target);
+  const clickedCartButton = openCartBtn.contains(e.target);
+
+  if (!clickedInsideDropdown && !clickedCartButton) {
+    closeCartDropdown();
+  }
+});
+
+// Close on Escape
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !drawer.hidden) closeDrawer();
+  if (e.key === "Escape" && !cartDropdown.hidden) {
+    closeCartDropdown();
+    openCartBtn.focus();
+  }
 });
 
-function openDrawer(){
-  drawer.hidden = false;
-  backdrop.hidden = false;
-  document.body.style.overflow = "hidden";
+function openCartDropdown() {
+  cartDropdown.hidden = false;
+  openCartBtn.setAttribute("aria-expanded", "true");
 }
 
-function closeDrawer(){
-  drawer.hidden = true;
-  backdrop.hidden = true;
-  document.body.style.overflow = "";
+function closeCartDropdown() {
+  cartDropdown.hidden = true;
+  openCartBtn.setAttribute("aria-expanded", "false");
+}
+
+function toggleCartDropdown() {
+  if (cartDropdown.hidden) openCartDropdown();
+  else closeCartDropdown();
 }
 
 // Quick chat
@@ -206,6 +226,52 @@ checkoutBtn.addEventListener("click", () => {
   openWhatsApp(msg);
 });
 
+// --- Event delegation for product grid ---
+productGrid.addEventListener("click", (e) => {
+  const addBtn = e.target.closest("[data-add]");
+  const incBtn = e.target.closest("[data-inc]");
+  const decBtn = e.target.closest("[data-dec]");
+
+  if (addBtn) {
+    addToCart(addBtn.dataset.add, 1);
+    toast("Added to cart ✔️");
+    // optional: auto-open cart dropdown after adding
+    openCartDropdown();
+    return;
+  }
+  if (incBtn) {
+    addToCart(incBtn.dataset.inc, 1);
+    return;
+  }
+  if (decBtn) {
+    addToCart(decBtn.dataset.dec, -1);
+    return;
+  }
+});
+
+// --- Event delegation for cart list ---
+cartListEl.addEventListener("click", (e) => {
+  const incBtn = e.target.closest("[data-inc]");
+  const decBtn = e.target.closest("[data-dec]");
+  const rmBtn  = e.target.closest("[data-remove]");
+
+  if (incBtn) {
+    addToCart(incBtn.dataset.inc, 1);
+    return;
+  }
+  if (decBtn) {
+    addToCart(decBtn.dataset.dec, -1);
+    return;
+  }
+  if (rmBtn) {
+    delete cart[rmBtn.dataset.remove];
+    saveCart(cart);
+    renderProducts();
+    renderCart();
+    return;
+  }
+});
+
 // --- Render ---
 function renderMini(){
   const picks = PRODUCTS.slice(0, 3);
@@ -221,7 +287,7 @@ function renderMini(){
 }
 
 function renderProducts(){
-  const list = PRODUCTS.filter(p => filter === "all" ? true : p.category === filter);
+  const list = PRODUCTS.filter(p => (filter === "all" ? true : p.category === filter));
 
   productGrid.innerHTML = list.map(p => {
     const qty = cart[p.id] || 0;
@@ -251,22 +317,22 @@ function renderProducts(){
       </article>
     `;
   }).join("");
-
-  productGrid.querySelectorAll("[data-add]").forEach(b => b.addEventListener("click", () => {
-    addToCart(b.dataset.add, 1);
-    toast("Added to cart ✔️");
-  }));
-  productGrid.querySelectorAll("[data-inc]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.inc, 1)));
-  productGrid.querySelectorAll("[data-dec]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.dec, -1)));
 }
 
 function renderCart(){
   const items = getCartItems();
-  cartCountEl.textContent = String(items.reduce((s, it) => s + it.qty, 0));
-  cartTotalEl.textContent = formatMoney(items.reduce((s, it) => s + it.qty * it.price, 0));
+  const count = items.reduce((s, it) => s + it.qty, 0);
+  const total = items.reduce((s, it) => s + it.qty * it.price, 0);
+
+  cartCountEl.textContent = String(count);
+  cartTotalEl.textContent = formatMoney(total);
 
   if (items.length === 0) {
-    cartListEl.innerHTML = `<div class="cartItem"><strong>Your cart is empty</strong><br><small>Add items from the shop.</small></div>`;
+    cartListEl.innerHTML = `
+      <div class="cartItem">
+        <strong>Your cart is empty</strong><br>
+        <small>Add items from the shop.</small>
+      </div>`;
     return;
   }
 
@@ -279,56 +345,40 @@ function renderCart(){
         </div>
         <div><strong>${formatMoney(it.price * it.qty)}</strong></div>
       </div>
+
       <div class="cartItem__actions">
         <div class="qty">
-          <button type="button" data-dec="${it.id}">−</button>
+          <button type="button" data-dec="${it.id}" aria-label="Decrease">−</button>
           <span>${it.qty}</span>
-          <button type="button" data-inc="${it.id}">+</button>
+          <button type="button" data-inc="${it.id}" aria-label="Increase">+</button>
         </div>
         <button class="removeBtn" type="button" data-remove="${it.id}">Remove</button>
       </div>
     </div>
   `).join("");
-
-  cartListEl.querySelectorAll("[data-inc]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.inc, 1)));
-  cartListEl.querySelectorAll("[data-dec]").forEach(b => b.addEventListener("click", () => addToCart(b.dataset.dec, -1)));
-  cartListEl.querySelectorAll("[data-remove]").forEach(b => b.addEventListener("click", () => {
-    delete cart[b.dataset.remove];
-    saveCart(cart);
-    renderProducts();
-    renderCart();
-  }));
 }
 
 // --- Cart helpers ---
 function addToCart(id, delta){
   const current = cart[id] || 0;
   const next = Math.max(0, current + delta);
+
   if (next === 0) delete cart[id];
   else cart[id] = next;
+
   saveCart(cart);
   renderProducts();
   renderCart();
 }
 
 function getCartItems(){
-  return Object.entries(cart).map(([id, qty]) => {
-    const p = PRODUCTS.find(x => x.id === id);
-    return p ? ({ ...p, qty }) : null;
-  }).filter(Boolean);
+  return Object.entries(cart)
+    .map(([id, qty]) => {
+      const p = PRODUCTS.find(x => x.id === id);
+      return p ? ({ ...p, qty }) : null;
+    })
+    .filter(Boolean);
 }
-
-// --- Drawer ---
-function openDrawer(){
-  drawer.hidden = false;
-  backdrop.hidden = false;
-  document.body.style.overflow = "hidden";
-}
-// function closeDrawer(){
-//   drawer.hidden = true;
-//   backdrop.hidden = true;
-//   document.body.style.overflow = "";
-// }
 
 // --- WhatsApp ---
 function buildOrderMessage(items, details){
@@ -373,6 +423,7 @@ function loadCart(){
     return {};
   }
 }
+
 function saveCart(next){
   localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
 }
