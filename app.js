@@ -41,7 +41,7 @@ function placeholderDataUrl(label) {
 
 const PRODUCTS = [
   // WEARS
-  { id:"w1", category:"wears", name:"Luxury Halter Neck Jumpsuit", price:75000, desc:"Elegant silhouette for occasions.", img:"assets/images/wears1.jpg" },
+  { id:"w1", category:"wears", name:"Luxury Halter Neck Jumpsuit", price:75000, desc:"Elegant silhouette for occasions.", img:"assets/images/wears1.jpg"},
   { id:"w2", category:"wears", name:"2-in-1 Bodysuit & Skirt Set", price:125000, desc:"Soft luxury set, perfect fit.", img:"assets/images/product-2.jpg"},
   { id:"w3", category:"wears", name:"Stylish Short Dress", price:86000, desc:"Classy and feminine.", img:"assets/images/product-3.jpg" },
   { id:"w4", category:"wears", name:"Stylish Short Dress", price:50000, desc:"Classy and feminine.", img:"assets/images/product-4.jpg" },
@@ -49,26 +49,72 @@ const PRODUCTS = [
   { id:"w6", category:"wears", name:"2-in-1 Bodysuit & Skirt Set", price:125000, desc:"Soft luxury set, perfect fit.", img: placeholderDataUrl("Wears") },
   { id:"w7", category:"wears", name:"Stylish Short Dress", price:86000, desc:"Classy and feminine.", img: placeholderDataUrl("Wears") },
   { id:"w8", category:"wears", name:"Stylish Short Dress", price:50000, desc:"Classy and feminine.", img: placeholderDataUrl("Wears") },
+  { id:"w9",  category:"wears", name:"Olanna", price:85000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
+  { id:"w10", category:"wears", name:"Capri", price:60000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
+  { id:"w11", category:"wears", name:"Olanna 2.0", price:55000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
+  { id:"w12", category:"wears", name:"Nova", price:70000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
+  { id:"w13", category:"wears", name:"Raye", price:50000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
+  { id:"w14", category:"wears", name:"Arden", price:55000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
+  { id:"w15", category:"wears", name:"Ariyah Midi Dress", price:50000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
+  { id:"w16", category:"wears", name:"Zeva", price:45000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
+  { id:"w17", category:"wears", name:"Nomi", price:55000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
+  { id:"w18", category:"wears", name:"Ivie", price:52000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
 
   // HAIR
   { id:"h1", category:"hair", name:"Body Wave Wig (10–12\")", price:45000, desc:"Natural finish, soft waves.", img:"assets/images/hair-1.jpg" },
   { id:"h2", category:"hair", name:"Hair Growth Oil (30ml)", price:85000, desc:"Nourish scalp + edges.", img:"assets/images/hair-2.jpg" },
   { id:"h3", category:"hair", name:"Silk Bonnet", price:18000, desc:"Protects hair overnight.", img:"assets/images/hair-3.jpg" },
   { id:"h4", category:"hair", name:"Silk Bonnet", price:25000, desc:"Protects hair overnight.", img:"assets/images/hair-4.jpg" },
+  { id:"h5",  category:"hair", name:"10 Inches Factory Bob Wig with Full Frontal", price:55000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
+  { id:"h6",  category:"hair", name:"10 Inches Factory Deep Wave Wig", price:60000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
+  { id:"h7",  category:"hair", name:"10 Inches Factory Frontal Wig", price:55000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
+  { id:"h8",  category:"hair", name:"10 Inches Factory Wig 4x4 Closure", price:50000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
+  { id:"h9",  category:"hair", name:"10 Inches Gucci Bone Straight", price:140000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
+  { id:"h10", category:"hair", name:"12 Inches T-Frontal Wig", price:45000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
+  { id:"h11", category:"hair", name:"22 Inches 360 Lace Silky Straight Wig", price:150000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
+  { id:"h12", category:"hair", name:"20 Inches Bone Straight Frontal (Dark Root)", price:180000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
+  { id:"h13", category:"hair", name:"30 Inches Human Hair Blend Deep Wave Full Frontal Wig", price:75000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
+  { id:"h14", category:"hair", name:"14 Inches Deep Wave 4x4 Closure Wig", price:85000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
+
 
   // SKINCARE
   { id:"s1", category:"skincare", name:"Hydrating Cleanser", price:12000, desc:"Gentle daily cleanse.", img:"assets/images/skin1.jpg" },
   { id:"s2", category:"skincare", name:"Vitamin C Serum", price:18500, desc:"Brightens and evens tone.", img:"assets/images/skin2.jpg" },
   { id:"s3", category:"skincare", name:"SPF 50 Sunscreen", price:15000, desc:"Daily protection.", img:"assets/images/skin3.jpg" },
   { id:"s4", category:"skincare", name:"SPF 50 Sunscreen", price:55000, desc:"Daily protection.", img:"assets/images/skin4.jpg"},
+    { id:"s5",  category:"skincare", name:"Timeless Skincare 20% VITAMIN C + E FERULIC ACID SERUM", price:23716, desc:"Skincare product.", img:"https://mirrorsbeauty.com/cdn/shop/files/30ml.png?v=1722141002&width=720" },
+  { id:"s6",  category:"skincare", name:"Timeless Skincare 10% VITAMIN C + E FERULIC ACID SERUM", price:23716, desc:"Skincare product.", img:"https://mirrorsbeauty.com/cdn/shop/files/1.1_3e028168-8aff-4b11-9398-c10332cfadd7.jpg?v=1722140684&width=640" },
+  { id:"s7",  category:"skincare", name:"Timeless Skincare VITAMIN B5 SERUM", price:21076, desc:"Skincare product.", img:"https://mirrorsbeauty.com/cdn/shop/files/7.jpg?v=1722141793&width=640" },
+  { id:"s8",  category:"skincare", name:"Nars Light Reflecting Advanced Skincare Foundaition", price:114400, desc:"Skincare product.", img:"https://mirrorsbeauty.com/cdn/shop/files/aruba.png?v=1722152621&width=750" },
+  { id:"s9",  category:"skincare", name:"Timeless Skincare HYALURONIC ACID + VITAMIN C SERUM", price:20196, desc:"Skincare product.", img:"https://mirrorsbeauty.com/cdn/shop/files/5_92fe660c-eac5-4777-a523-a53368c62f6c.jpg?v=1722141562&width=640" },
+  { id:"s10", category:"skincare", name:"Timeless Skincare HYALURONIC ACID 100% PURE", price:13145, desc:"Skincare product.", img:"https://mirrorsbeauty.com/cdn/shop/files/6_d115147e-9811-4302-9450-0a3d1baa1246.jpg?v=1722141691&width=640" },
+  { id:"s11", category:"skincare", name:"Timeless Skincare HA Matrixyl®️ 3000 w/Rose Spray", price:17556, desc:"Skincare product.", img:"https://mirrorsbeauty.com/cdn/shop/files/4.jpg?v=1722141427&width=640" },
+  { id:"s12", category:"skincare", name:"Rare Beauty Find Comfort Niacinamide Hydrating Body Lotion", price:61600, desc:"Skincare product.", img:"https://mirrorsbeauty.com/cdn/shop/files/s2734028-main-zoom_jpg.webp?v=1760972365&width=350" },
+  { id:"s13", category:"skincare", name:"Beauty of Joseon Red Bean Refreshing Pore Mask", price:35200, desc:"Skincare product.", img:"https://mirrorsbeauty.com/cdn/shop/files/IMG-6361.webp?v=1761835018&width=944" },
+  { id:"s14", category:"skincare", name:"Fresh Kombucha Facial Treatment Essence 2.0", price:75504, desc:"Skincare product.", img:"https://mirrorsbeauty.com/cdn/shop/files/images_21.avif?v=1752146381&width=1970" },
+  { id:"s15", category:"skincare", name:"SKIN1004 Madagascar Centella Toning Toner", price:29920, desc:"Skincare product.", img:"https://mirrorsbeauty.com/cdn/shop/files/IMG-6434.jpg?v=1761845295&width=800" },
+  { id:"s16", category:"skincare", name:"Fresh Daily Hydration To Go", price:103400, desc:"Skincare product.", img:"https://mirrorsbeauty.com/cdn/shop/files/a38c8dae-5667-4f3f-adcd-83c3fabfcb39__57621_1.jpg?v=1751982850&width=1280" },
+  { id:"s17", category:"skincare", name:"Anua Heartleaf 77 Soothing Toner", price:36960, desc:"Skincare product.", img:"https://mirrorsbeauty.com/cdn/shop/files/Anua-soothing-toner-500x500.webp?v=1773154351&width=500" },
+  { id:"s18", category:"skincare", name:"Glow Recipe dewy skin dazzlers", price:118800, desc:"Skincare product.", img:"https://mirrorsbeauty.com/cdn/shop/files/P10060008_principal.jpg?v=1744125290&width=1248" },
+  { id:"s19", category:"skincare", name:"MURAD MULTI VITAMIN CLEAR COAT BROAD SPECTRUM SPF50", price:77440, desc:"Skincare product.", img:"https://mirrorsbeauty.com/cdn/shop/files/564900_MVCC_Carousel_1_MURAD.webp?v=1771436083&width=1000" },
+  { id:"s20", category:"skincare", name:"Mario Badescu Witch Hazel & Rose Water Toner", price:26400, desc:"Skincare product.", img:"https://mirrorsbeauty.com/cdn/shop/files/IMG-7967.jpg?v=1767011636&width=4000" },
 
   // MAKEUP
   { id:"m1", category:"makeup", name:"Soft Glam Lip Gloss", price:6500, desc:"High shine, comfy wear.", img:"assets/images/makeup1.jpg" },
   { id:"m2", category:"makeup", name:"Everyday Brow Gel", price:7000, desc:"Clean defined brows.", img:"assets/images/makeup2.jpg" },
   { id:"m3", category:"makeup", name:"Glow Setting Spray", price:10500, desc:"Locks makeup with glow.", img:"assets/images/makeup3.jpg" },
   { id:"m4", category:"makeup", name:"Glow Setting Spray", price:20500, desc:"Locks makeup with glow.", img:"assets/images/makeup4.jpg" },
+  { id:"m5",  category:"makeup", name:"Danessa Myricks Beauty Yummy Skin Blurring Balm", price:75504, desc:"Luxury makeup product.", img:"https://mirrorsbeauty.com/cdn/shop/files/11.png?v=1722002636&width=872" },
+  { id:"m6",  category:"makeup", name:"Nars Radiant Longwear Foundation", price:118800, desc:"Luxury makeup product.", img:"https://mirrorsbeauty.com/cdn/shop/files/barcelona.png?v=1722152864&width=750" },
+  { id:"m7",  category:"makeup", name:"Fenty Beauty Pro Filt’r Soft Matte Powder Foundation", price:88000, desc:"Luxury makeup product.", img:"https://mirrorsbeauty.com/cdn/shop/files/840026645966_1.jpg?v=1734521673&width=500" },
+  { id:"m8",  category:"makeup", name:"Charlotte Tilbury Airbrush Flawless Setting Spray", price:55000, desc:"Luxury makeup product.", img:"https://mirrorsbeauty.com/cdn/shop/files/34ml.jpg?v=1721972049&width=640" },
+  { id:"m9",  category:"makeup", name:"Morphe Continuous Setting Mist", price:28600, desc:"Luxury makeup product.", img:"https://mirrorsbeauty.com/cdn/shop/files/2528888.avif?v=1758841454&width=1080" },
+  { id:"m10", category:"makeup", name:"Fenty Beauty Gloss Bomb Universal Lip Luminizer", price:46200, desc:"Luxury makeup product.", img:"https://mirrorsbeauty.com/cdn/shop/files/choco1.png?v=1721025569&width=1400" },
+  { id:"m11", category:"makeup", name:"Haus Labs By Lady Gaga Triclone Skin Tech Medium Coverage Foundation", price:107800, desc:"Luxury makeup product.", img:"https://mirrorsbeauty.com/cdn/shop/files/HL_MAY24_PDP_AllureReadersChoice_230_25a3b748-8f89-4392-ae94-b4af8185c13b.jpg?v=1734186707&width=1250" },
+  { id:"m12", category:"makeup", name:"Patrick TA Major Headlines Double - Take Crème & Powder Blush Duo", price:88000, desc:"Luxury makeup product.", img:"https://mirrorsbeauty.com/cdn/shop/files/wanted1.png?v=1722128379&width=700" },
+  { id:"m13", category:"makeup", name:"PAT McGRATH LABS Skin Fetish: Sublime Perfection Concealer", price:74800, desc:"Luxury makeup product.", img:"https://mirrorsbeauty.com/cdn/shop/files/2020_01_PMG_Concealer_LightMedium_12_FINAL_1200x1200_0813abc5-5492-47e6-aebe-7a28367fb239.webp?v=1751908184&width=1100" },
+  { id:"m14", category:"makeup", name:"Danessa Myricks Beauty Yummy Skin Serum Skin Tint Foundation with Peptides + Ceramide", price:75504, desc:"Luxury makeup product.", img:"https://mirrorsbeauty.com/cdn/shop/files/YS-SST_C_S_-_01.jpg?v=1747467604&width=785" },
 ];
-
 // --- State ---
 let cart = loadCart(); // { [id]: qty }
 let filter = "all";
@@ -461,3 +507,4 @@ function toast(text){
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => { toastEl.hidden = true; }, 1600);
 }
+
