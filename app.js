@@ -40,8 +40,8 @@ function placeholderDataUrl(label) {
 }
 
 const PRODUCTS = [
-  // WEARS
-  { id:"w1", category:"wears", name:"Luxury Halter Neck Jumpsuit", price:75000, desc:"Elegant silhouette for occasions.", img:"assets/images/wears1.jpg"},
+    // WEARS
+  { id:"w1", category:"wears", name:"Luxury Halter Neck Jumpsuit", price:75000, desc:"Elegant silhouette for occasions.", img:"assets/images/wears1.jpg" },
   { id:"w2", category:"wears", name:"2-in-1 Bodysuit & Skirt Set", price:125000, desc:"Soft luxury set, perfect fit.", img:"assets/images/product-2.jpg"},
   { id:"w3", category:"wears", name:"Stylish Short Dress", price:86000, desc:"Classy and feminine.", img:"assets/images/product-3.jpg" },
   { id:"w4", category:"wears", name:"Stylish Short Dress", price:50000, desc:"Classy and feminine.", img:"assets/images/product-4.jpg" },
@@ -49,33 +49,32 @@ const PRODUCTS = [
   { id:"w6", category:"wears", name:"2-in-1 Bodysuit & Skirt Set", price:125000, desc:"Soft luxury set, perfect fit.", img: placeholderDataUrl("Wears") },
   { id:"w7", category:"wears", name:"Stylish Short Dress", price:86000, desc:"Classy and feminine.", img: placeholderDataUrl("Wears") },
   { id:"w8", category:"wears", name:"Stylish Short Dress", price:50000, desc:"Classy and feminine.", img: placeholderDataUrl("Wears") },
-  { id:"w9",  category:"wears", name:"Olanna", price:85000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
-  { id:"w10", category:"wears", name:"Capri", price:60000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
-  { id:"w11", category:"wears", name:"Olanna 2.0", price:55000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
-  { id:"w12", category:"wears", name:"Nova", price:70000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
-  { id:"w13", category:"wears", name:"Raye", price:50000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
-  { id:"w14", category:"wears", name:"Arden", price:55000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
-  { id:"w15", category:"wears", name:"Ariyah Midi Dress", price:50000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
-  { id:"w16", category:"wears", name:"Zeva", price:45000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
-  { id:"w17", category:"wears", name:"Nomi", price:55000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
-  { id:"w18", category:"wears", name:"Ivie", price:52000, desc:"Women's wear.", img: placeholderDataUrl("Wears") },
+  { id:"w9",  category:"wears", name:"BLACK & WHITE COWL BLOUSE", price:13000, desc:"Women's wear.", img:"https://midrra.com/wp-content/uploads/2025/11/20251127_201718-300x450.jpg" },
+  { id:"w10", category:"wears", name:"LITTLE PRINT SLEEVELESS JUMPSUIT", price:17000, desc:"Women's wear.", img:"https://midrra.com/wp-content/uploads/2026/02/20251230_163945-300x450.jpg" },
+  { id:"w11", category:"wears", name:"BUTTERFLY PRINT PLAYSUIT", price:12000, desc:"Women's wear.", img:"https://midrra.com/wp-content/uploads/2026/02/20251230_160048-300x450.jpg" },
+  { id:"w12", category:"wears", name:"MINI PLEATED DRESS", price:17000, desc:"Women's wear.", img:"https://midrra.com/wp-content/uploads/2026/02/20260212_135646-300x450.jpg" },
+  { id:"w13", category:"wears", name:"TULLE SLEEVE V-NECK BLOUSE", price:13000, desc:"Women's wear.", img:"https://midrra.com/wp-content/uploads/2026/02/20260212_144807-300x450.jpg" },
+  { id:"w14", category:"wears", name:"BLACK CREPE TROUSER", price:15000, desc:"Women's wear.", img:"https://midrra.com/wp-content/uploads/2026/02/20260212_144803-300x450.jpg" },
+  { id:"w15", category:"wears", name:"SWIRL SIDE SLIT DRESS", price:20000, desc:"Women's wear.", img:"https://midrra.com/wp-content/uploads/2026/02/20260212_155146-300x450.jpg" },
+  { id:"w16", category:"wears", name:"BISHOP NECK SKATER DRESS", price:17000, desc:"Women's wear.", img:"https://midrra.com/wp-content/uploads/2026/02/20260212_154448-300x450.jpg" },
+  { id:"w17", category:"wears", name:"TIE NECK SHOW SHOULDER BLOUSE", price:14000, desc:"Women's wear.", img:"https://midrra.com/wp-content/uploads/2026/02/20260212_151917-300x450.jpg" },
+  { id:"w18", category:"wears", name:"RED LACE BODYCON DRESS", price:14000, desc:"Women's wear.", img:"https://midrra.com/wp-content/uploads/2026/02/20260212_152740-300x450.jpg" },
 
   // HAIR
   { id:"h1", category:"hair", name:"Body Wave Wig (10–12\")", price:45000, desc:"Natural finish, soft waves.", img:"assets/images/hair-1.jpg" },
   { id:"h2", category:"hair", name:"Hair Growth Oil (30ml)", price:85000, desc:"Nourish scalp + edges.", img:"assets/images/hair-2.jpg" },
   { id:"h3", category:"hair", name:"Silk Bonnet", price:18000, desc:"Protects hair overnight.", img:"assets/images/hair-3.jpg" },
   { id:"h4", category:"hair", name:"Silk Bonnet", price:25000, desc:"Protects hair overnight.", img:"assets/images/hair-4.jpg" },
-  { id:"h5",  category:"hair", name:"10 Inches Factory Bob Wig with Full Frontal", price:55000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
-  { id:"h6",  category:"hair", name:"10 Inches Factory Deep Wave Wig", price:60000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
-  { id:"h7",  category:"hair", name:"10 Inches Factory Frontal Wig", price:55000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
-  { id:"h8",  category:"hair", name:"10 Inches Factory Wig 4x4 Closure", price:50000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
-  { id:"h9",  category:"hair", name:"10 Inches Gucci Bone Straight", price:140000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
-  { id:"h10", category:"hair", name:"12 Inches T-Frontal Wig", price:45000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
-  { id:"h11", category:"hair", name:"22 Inches 360 Lace Silky Straight Wig", price:150000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
-  { id:"h12", category:"hair", name:"20 Inches Bone Straight Frontal (Dark Root)", price:180000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
-  { id:"h13", category:"hair", name:"30 Inches Human Hair Blend Deep Wave Full Frontal Wig", price:75000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
-  { id:"h14", category:"hair", name:"14 Inches Deep Wave 4x4 Closure Wig", price:85000, desc:"Human hair wig.", img: placeholderDataUrl("Hair") },
-
+  { id:"h5",  category:"hair", name:"Darling Superstar", price:4100, desc:"Braids hair extension.", img:"https://thedivashop.ng/cdn/shop/products/Darling-Super-Star-350_e5884fcb-5c65-49c5-9c76-d3d6d63d87ea_600x.jpg?v=1756462851" },
+  { id:"h6",  category:"hair", name:"Darling Natural Twist", price:3400, desc:"Crochet hair extension.", img:"https://thedivashop.ng/cdn/shop/products/natural_twist_600x.jpg?v=1658430128" },
+  { id:"h7",  category:"hair", name:"Darling Duchess Regular Cut", price:4100, desc:"Braids hair extension.", img:"https://thedivashop.ng/cdn/shop/files/DUCHESS_07_new_600x.png?v=1685632749" },
+  { id:"h8",  category:"hair", name:"Darling Duchess Pre-Cut", price:7700, desc:"Braids hair extension.", img:"https://thedivashop.ng/cdn/shop/files/Duchess_Funke_a3798497-d91e-42a6-98e1-ad6fe1754729_600x.png?v=1714140233" },
+  { id:"h9",  category:"hair", name:"Darling Empress Curly Braid", price:8200, desc:"Braids hair extension.", img:"https://thedivashop.ng/cdn/shop/files/Curly-Braid_600x.png?v=1715838879" },
+  { id:"h10", category:"hair", name:"Darling Empress Loose Braid", price:8600, desc:"Braids hair extension.", img:"https://thedivashop.ng/cdn/shop/files/Loose-Braid_600x.png?v=1715838053" },
+  { id:"h11", category:"hair", name:"Darling Super Soft", price:5700, desc:"Braids hair extension.", img:"https://thedivashop.ng/cdn/shop/files/SUPERSOFT_New_600x.png?v=1717565422" },
+  { id:"h12", category:"hair", name:"Darling Passion Twist", price:7100, desc:"Crochet hair extension.", img:"https://thedivashop.ng/cdn/shop/products/Passion-Twist-02_600x.png?v=1589283215" },
+  { id:"h13", category:"hair", name:"Darling Natural Twist Long", price:4320, desc:"Crochet hair extension.", img:"https://thedivashop.ng/cdn/shop/products/Natural-Twist-Long_600x.png?v=1659692725" },
+  { id:"h14", category:"hair", name:"Darling Bohemian Passion Twist", price:7400, desc:"Crochet hair extension.", img:"https://thedivashop.ng/cdn/shop/products/Bohemain-520-x-600_600x.png?v=1633417421" },
 
   // SKINCARE
   { id:"s1", category:"skincare", name:"Hydrating Cleanser", price:12000, desc:"Gentle daily cleanse.", img:"assets/images/skin1.jpg" },
@@ -507,4 +506,5 @@ function toast(text){
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => { toastEl.hidden = true; }, 1600);
 }
+
 
